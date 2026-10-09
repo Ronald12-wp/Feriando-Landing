@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1f5d3a">
+  <meta name="description" content="Feriando conecta a personas para descubrir productos y coordinar intercambios en su comunidad.">
+  <title>Feriando — Intercambia cerca de ti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #1f5d3a;
+      --fresh: #6fae3e;
+      --orange: #e8702a;
+      --tomato: #bb4035;
+      --corn: #f5b720;
+      --cream: #fbf3e4;
+      --brown: #4a2e1f;
+      --muted: #7a6148;
+      --line: #e7d9c7;
+      --white: #fff;
+      --shadow: 0 22px 60px rgba(74, 46, 31, .12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--brown); background: var(--cream); font-family: "Work Sans", sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
+    .topbar { position: sticky; top: 0; z-index: 5; background: rgba(251,243,228,.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(74,46,31,.08); }
+    .nav { height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; font: 800 26px/1 "Baloo 2", sans-serif; color: var(--green); }
+    .brand img { width: 48px; height: 38px; object-fit: contain; border-radius: 8px; mix-blend-mode: multiply; }
+    .links { display: flex; align-items: center; gap: 30px; color: var(--muted); font-size: 14px; font-weight: 600; }
+    .links a:hover { color: var(--green); }
+    .button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 13px 20px; border: 0; border-radius: 999px; background: var(--green); color: white; font: 700 15px "Work Sans", sans-serif; cursor: pointer; box-shadow: 0 8px 20px rgba(31,93,58,.18); transition: transform .2s, background .2s; }
+    .button:hover { transform: translateY(-2px); background: #17482c; }
+    .button.apk { background: var(--orange); color: white; box-shadow: 0 8px 20px rgba(232,112,42,.28); }
+    .button.apk:hover { background: #d45e1b; }
+    .button.secondary { background: white; color: var(--green); border: 1px solid var(--line); box-shadow: none; }
+    .hero { position: relative; overflow: hidden; padding: 80px 0 90px; }
+    .hero::before { content: ""; position: absolute; width: 520px; height: 520px; border-radius: 50%; right: -130px; top: 10px; background: radial-gradient(circle, rgba(245,183,32,.27), rgba(245,183,32,0) 68%); }
+    .hero-grid { position: relative; display: grid; grid-template-columns: 1.03fr .97fr; align-items: center; gap: 50px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--green); background: #e8efdf; border-radius: 30px; padding: 8px 13px; font-size: 13px; font-weight: 700; }
+    .eyebrow span { width: 8px; height: 8px; border-radius: 50%; background: var(--fresh); }
+    h1, h2, h3 { font-family: "Baloo 2", sans-serif; }
+    h1 { margin: 20px 0 16px; max-width: 650px; font-size: clamp(46px, 6vw, 76px); line-height: .98; letter-spacing: -1.5px; color: var(--green); }
+    h1 em { color: var(--orange); font-style: normal; }
+    .hero-copy { max-width: 560px; color: var(--muted); font-size: 18px; line-height: 1.7; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .note { margin-top: 15px; color: var(--muted); font-size: 12px; }
+    .showcase { position: relative; display: grid; place-items: center; min-height: 460px; }
+    .sun { position: absolute; width: 350px; height: 350px; border-radius: 50%; background: #f8df9f; }
+    .phone { z-index: 1; position: relative; width: 276px; padding: 11px; border: 7px solid #33251e; border-radius: 38px; background: #fff; box-shadow: var(--shadow); transform: rotate(3deg); }
+    .phone-top { width: 82px; height: 17px; margin: -1px auto 10px; border-radius: 0 0 12px 12px; background: #33251e; }
+    .app-head { display:flex; justify-content:space-between; align-items:center; padding: 6px 4px 12px; font: 700 20px "Baloo 2", sans-serif; color: var(--green); }
+    .avatar { display:grid; place-items:center; width:29px; height:29px; border-radius:50%; background:#e8efdf; color:var(--green); font-weight:700; }
+    .search { padding: 10px 12px; border-radius: 12px; color:#9a8876; background:#f7f2eb; font-size:11px; }
+    .chips { display:flex; gap:6px; margin:11px 0; }
+    .chip { padding:6px 9px; border-radius:20px; background:#edf4e8; color:var(--green); font-size:9px; font-weight:700; }
+    .chip.active { background:var(--green); color:white; }
+    .product { overflow:hidden; margin-bottom:10px; border:1px solid #f0e9df; border-radius:15px; }
+    .product-art { display:grid; place-items:center; height:104px; font-size:45px; background:linear-gradient(135deg,#f8e6bb,#e2edda); }
+    .product-info { padding:9px 10px 11px; }
+    .product-info strong { display:block; font-size:12px; }
+    .product-info small { color:var(--muted); font-size:9px; }
+    .product-info b { float:right; color:var(--orange); font-size:10px; }
+    .float-card { z-index:2; position:absolute; display:flex; align-items:center; gap:10px; padding:12px 15px; border-radius:16px; background:white; box-shadow:var(--shadow); font-size:12px; font-weight:700; }
+    .float-card .icon { display:grid; place-items:center; width:34px; height:34px; border-radius:11px; background:#fff1df; font-size:18px; }
+    .float-one { top: 70px; right: -7px; }
+    .float-two { bottom: 65px; left: -12px; }
+    .section { padding: 78px 0; }
+    .section.white { background:#fff; }
+    .section-head { max-width:650px; margin:0 auto 38px; text-align:center; }
+    .section-head h2 { margin:9px 0; color:var(--green); font-size:clamp(34px,4vw,48px); line-height:1.05; }
+    .section-head p { color:var(--muted); line-height:1.7; }
+    .feature-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+    .feature { padding:23px; border:1px solid var(--line); border-radius:20px; background:#fff; }
+    .feature-icon { display:grid; place-items:center; width:48px; height:48px; border-radius:15px; background:#e8efdf; font-size:24px; }
+    .feature:nth-child(2) .feature-icon { background:#fff1df; }
+    .feature:nth-child(3) .feature-icon { background:#fce9e5; }
+    .feature:nth-child(4) .feature-icon { background:#e8f0ff; }
+    .feature h3 { margin:17px 0 7px; font-size:21px; color:var(--green); }
+    .feature p { margin:0; color:var(--muted); font-size:14px; line-height:1.65; }
+    .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; counter-reset:step; }
+    .step { padding:26px; border-radius:20px; background:#f7f0e4; }
+    .step::before { counter-increment:step; content:"0" counter(step); display:block; margin-bottom:20px; color:var(--orange); font:800 32px "Baloo 2",sans-serif; }
+    .step h3 { margin:0 0 8px; color:var(--green); font-size:22px; }
+    .step p { margin:0; color:var(--muted); font-size:14px; line-height:1.65; }
+    .cta { padding: 64px 24px; border-radius:28px; background:var(--green); color:white; text-align:center; }
+    .cta h2 { margin:0 0 10px; font-size:clamp(34px,4vw,48px); }
+    .cta p { max-width:600px; margin:0 auto 24px; color:#e1eadf; line-height:1.7; }
+    .cta .button { background:var(--corn); color:var(--brown); box-shadow:none; }
+    footer { padding:28px 0; color:var(--muted); font-size:13px; }
+    .footer-row { display:flex; justify-content:space-between; align-items:center; gap:16px; }
+    .footer-brand { color:var(--green); font:800 22px "Baloo 2",sans-serif; }
+    @media (max-width: 850px) {
+      .hero { padding:58px 0 55px; }
+      .hero-grid { grid-template-columns:1fr; gap:12px; }
+      .showcase { min-height:420px; }
+      .feature-grid { grid-template-columns:repeat(2,1fr); }
+      .links { gap:16px; }
+    }
+    @media (max-width: 560px) {
+      .wrap { width: min(calc(100% - 28px), 1120px); }
+      .nav { height:68px; }
+      .brand { font-size:22px; }
+      .brand img { width:40px; height:32px; }
+      .links { display:none; }
+      .nav > .button { padding:10px 14px; font-size:13px; }
+      .hero-copy { font-size:16px; }
+      .showcase { min-height:390px; }
+      .sun { width:285px; height:285px; }
+      .phone { width:245px; }
+      .float-one { right:-2px; top:50px; }
+      .float-two { left:-2px; bottom:42px; }
+      .section { padding:60px 0; }
+      .feature-grid, .steps { grid-template-columns:1fr; }
+      .feature { padding:20px; }
+      .footer-row { flex-direction:column; align-items:flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav wrap" aria-label="Navegación principal">
+      <a class="brand" href="#inicio" aria-label="Feriando, inicio">
+        <img src="./assets/images/logo.jpeg" alt="">
+        <span>Feriando</span>
+      </a>
+      <div class="links">
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#funciones">Funciones</a>
+        <a href="#comunidad">Comunidad</a>
+      </div>
+      <a class="button" href="#como-funciona">Conocer la app <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-grid wrap">
+        <div>
+          <div class="eyebrow"><span></span> Una forma cercana de intercambiar</div>
+          <h1>Lo que tienes puede ser justo lo que <em>alguien busca.</em></h1>
+          <p class="hero-copy">Feriando conecta a personas de la comunidad para descubrir productos, compartir lo que ofrecen y coordinar intercambios de manera sencilla.</p>
+          <div class="actions">
+            <a class="button apk" href="./apk/feriando-v1.0.0.apk" download="Feriando-v1.0.0.apk">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.52 0a1.75 1.75 0 0 1 1.75 1.75v12.5a1.75 1.75 0 0 1-1.75 1.75h-11.04a1.75 1.75 0 0 1-1.75-1.75V1.75A1.75 1.75 0 0 1 6.48 0h11.04zm-5.52 17a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-7-14.5v12a3.25 3.25 0 0 0 3.25 3.25h1.25v2a1.5 1.5 0 0 0 3 0v-2h3v2a1.5 1.5 0 0 0 3 0v-2h1.25a3.25 3.25 0 0 0 3.25-3.25v-12h-18z"/>
+              </svg>
+              Descargar APK Android
+            </a>
+            <a class="button secondary" href="#funciones">Explorar funciones</a>
+          </div>
+          <p class="note">Conoce una comunidad que hace circular productos y nuevas oportunidades.</p>
+        </div>
+
+        <div class="showcase" aria-label="Vista ilustrativa del catálogo de Feriando">
+          <div class="sun"></div>
+          <div class="phone">
+            <div class="phone-top"></div>
+            <div class="app-head"><span>Feriando</span><span class="avatar">F</span></div>
+            <div class="search">⌕ &nbsp; ¿Qué estás buscando?</div>
+            <div class="chips"><span class="chip active">Todo</span><span class="chip">Alimentos</span><span class="chip">Hogar</span></div>
+            <article class="product">
+              <div class="product-art" aria-hidden="true">🌽</div>
+              <div class="product-info"><strong>Maíz de temporada</strong><small>Disponible para intercambio</small><b>Ver producto</b></div>
+            </article>
+            <article class="product">
+              <div class="product-art" style="background:linear-gradient(135deg,#f7dfcf,#f5ecc8)" aria-hidden="true">🧺</div>
+              <div class="product-info"><strong>Canasta artesanal</strong><small>Publicado en tu comunidad</small><b>Ver producto</b></div>
+            </article>
+          </div>
+          <div class="float-card float-one"><span class="icon">🔄</span><span>Coordina un<br>intercambio</span></div>
+          <div class="float-card float-two"><span class="icon">💬</span><span>Habla directamente<br>con la comunidad</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section white" id="funciones">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow"><span></span> Todo en un mismo lugar</div>
+          <h2>Encuentra, publica y coordina</h2>
+          <p>Feriando reúne herramientas para que descubrir productos e iniciar un intercambio sea más fácil.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature"><div class="feature-icon" aria-hidden="true">🛍️</div><h3>Explora el catálogo</h3><p>Consulta productos publicados por otras personas y revisa sus detalles.</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">📦</div><h3>Publica productos</h3><p>Comparte lo que ofreces con imágenes, información y disponibilidad.</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">🔄</div><h3>Propón trueques</h3><p>Envía propuestas y da seguimiento a tus intercambios desde la app.</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">💬</div><h3>Conversa</h3><p>Coordina los detalles con chat y recibe notificaciones de actividad.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="como-funciona">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow"><span></span> Empieza en pocos pasos</div>
+          <h2>Un intercambio comienza con una conexión</h2>
+          <p>Una experiencia pensada para ayudarte a encontrar productos y ponerte en contacto con otras personas.</p>
+        </div>
+        <div class="steps">
+          <article class="step"><h3>Crea tu cuenta</h3><p>Regístrate y completa la información básica de tu perfil.</p></article>
+          <article class="step"><h3>Descubre o publica</h3><p>Explora el catálogo o publica un producto que quieras compartir.</p></article>
+          <article class="step"><h3>Coordina tu trueque</h3><p>Envía una propuesta y conversa para acordar los detalles.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section white" id="comunidad">
+      <div class="wrap">
+        <div class="cta">
+          <h2>Feriando: productos que conectan personas</h2>
+          <p>Descubre una manera más cercana de compartir lo que tienes y encontrar lo que necesitas dentro de tu comunidad.</p>
+          <a class="button" href="#inicio">Volver al inicio <span aria-hidden="true">↑</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-row wrap">
+      <span class="footer-brand">Feriando</span>
+      <span>Conectando productos, personas y comunidad.</span>
+      <span>© <span id="year"></span> Feriando</span>
+    </div>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
